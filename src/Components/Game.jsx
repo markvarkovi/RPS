@@ -4,7 +4,9 @@ export default function Game() {
   const [result, setResult] = useState('');
   const [userChoice, setUserChoice] = useState('');
   const [cpuChoice, setCpuChoice] = useState('');
-  
+  const [userWins, setUserWins] = useState(0);
+  const [cpuWins, setCpuWins] = useState(0);
+
   const options = ["rock", "paper", "scissors"];
 
   const playGame = (userInput) => {
@@ -21,9 +23,19 @@ export default function Game() {
       (userInput === "scissors" && CPU_PICK === "paper")
     ) {
       setResult("You win! 🎉");
+      setUserWins(userWins + 1);
     } else {
       setResult("CPU wins! Try again.");
+      setCpuWins(cpuWins + 1);
     }
+  };
+
+  const resetGame = () => {
+    setUserChoice('');
+    setCpuChoice('');
+    setResult('');
+    setUserWins(0);
+    setCpuWins(0);
   };
 
   return (
@@ -55,7 +67,18 @@ export default function Game() {
           <p className="text-2xl font-semibold mt-4 text-gray-800">{result}</p>
         )}
       </div>
+      <div className="flex space-x-8 mt-6">
+        <div className="text-lg text-gray-800">
+          <p>User Wins: {userWins}</p>
+          <p>CPU Wins: {cpuWins}</p>
+        </div>
+        <button
+          className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded-lg"
+          onClick={resetGame}
+        >
+          Start Again
+        </button>
+      </div>
     </div>
   );
 }
-
